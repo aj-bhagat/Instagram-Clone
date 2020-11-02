@@ -1,2 +1,2 @@
 # Instagram-Clone
-Instagram Clone with REACT JS
+Instagram Clone with REACT-JS

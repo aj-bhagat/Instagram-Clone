@@ -1,4 +1,13 @@
 .post_image{
-    width: 100%;
+    width: 50%;
     object-fit: contain;
+}
+
+.post_text{
+    font-weight: normal;
+}
+
+.post_header{
+    display: flex;
+    align-items: center;
 }

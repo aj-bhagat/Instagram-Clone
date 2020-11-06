@@ -13,7 +13,7 @@ function Post({username, caption, imageUrl}) {
             
 
             <img className="post_image" src={imageUrl} alt=''></img>
-            {/* image */}
+            
     <h4 className="post_text"><strong>{username}</strong> {caption}</h4>
         </div>
     )

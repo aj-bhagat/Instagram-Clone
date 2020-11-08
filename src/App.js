@@ -100,7 +100,7 @@ function App() {
 
   return (
     <div className="app">
-      <ImageUpload/>
+      <ImageUpload username={user.displayName}/>
       <Modal
         open={open}
         onClose={() => setOpen(false)}

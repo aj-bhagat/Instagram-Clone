@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post';
-import db from './firebase';
+import db, { auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
@@ -39,9 +39,29 @@ function App() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe= auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        //user has logeged in...
+        console.log(authUser);
+        setUser(authUser);
+      } else {
+        //user has logged out...
+        setUser(null);
+      }
+    })
+
+    return ()=>{
+      //perform some clean up
+      unsubscribe();
+    }
+  }, [user, username]);
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
+      //every time a new post is added, this code fires...
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -51,6 +71,15 @@ function App() {
 
   const signUp = (event) => {
     event.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((authUser) =>{
+        authUser.user.updateProfile({
+          displayName: username,
+        })
+      })
+      .catch((error) => alert(error.message));
   }
 
   return (
@@ -92,7 +121,12 @@ function App() {
           alt=''
         />
       </div>
-      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      {user?(
+        <Button onClick={() => auth.signOut()}>Logout</Button>
+      ):(
+        <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      )}
+      
       <h1>Instagram Clone</h1>
       {
         posts.map(({ id, post }) => (

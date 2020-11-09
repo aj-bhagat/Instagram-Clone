@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import db, {storage} from './firebase';
 import firebase from "firebase";
 
-function ImageUpload(username) {
+function ImageUpload({username}) {
     const[caption, setCaption]= useState('');
     const[image, setImage]= useState(null);
     const[progress, setProgress]= useState(0);
@@ -40,7 +40,7 @@ function ImageUpload(username) {
                 .getDownloadURL()
                 .then(url => {
                     //post image inside db...
-                    console.log(username);
+                    console.log(username.value);
                     db.collection("posts").add({
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,

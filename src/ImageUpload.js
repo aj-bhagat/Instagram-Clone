@@ -40,12 +40,17 @@ function ImageUpload(username) {
                 .getDownloadURL()
                 .then(url => {
                     //post image inside db...
+                    console.log(username);
                     db.collection("posts").add({
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,
                         imageUrl: url,
-                        username: username
-                    })
+                        username: username,
+                    });
+
+                    setProgress(0);
+                    setCaption("");
+                    setImage(null);
                 })
             }
         )
@@ -55,7 +60,7 @@ function ImageUpload(username) {
             {/*Caption input... */}
             {/*File picker image... */}
             {/*Post/Upload button */}
-
+            <progress value={progress} max="100"/>
             <input typr="text" placeholder="Enter a Caption..." onChange={event => setCaption(event.target.value)} value={caption}/>
             <input type="file" onChange={handleChange}/>
             <Button onClick={handleUpload}>

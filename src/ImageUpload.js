@@ -40,7 +40,6 @@ function ImageUpload({username}) {
                 .getDownloadURL()
                 .then(url => {
                     //post image inside db...
-                    console.log(username.value);
                     db.collection("posts").add({
                         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                         caption: caption,

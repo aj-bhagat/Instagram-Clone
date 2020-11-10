@@ -100,12 +100,6 @@ function App() {
 
   return (
     <div className="app">
-      {user?.displayName ?(
-        <ImageUpload username={user.displayName}/>
-      ):(
-        <h3>Sorry! You Need to Login to Upload.</h3>
-      )}
-
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -114,7 +108,7 @@ function App() {
           <form className="app_signup">
             <center>
               <img className="app_headerImage"
-                src="https://v2.droproball.com/wp-content/uploads/2020/04/instagram-text-logo.png"
+                src="https://thumbs.dreamstime.com/b/instagram-141049465.jpg"
                 alt=''
               />
             </center>
@@ -145,7 +139,7 @@ function App() {
           <form className="app_signup">
             <center>
               <img className="app_headerImage"
-                src="https://v2.droproball.com/wp-content/uploads/2020/04/instagram-text-logo.png"
+                src="https://thumbs.dreamstime.com/b/instagram-141049465.jpg"
                 alt=''
               />
             </center>
@@ -165,11 +159,10 @@ function App() {
       </Modal>
       <div className="app_header">
         <img className="app_headerImage"
-          src="https://v2.droproball.com/wp-content/uploads/2020/04/instagram-text-logo.png"
+          src="https://www.pngarts.com/files/4/Instagram-PNG-Background-Image.png"
           alt=''
         />
-      </div>
-      {user ? (
+        {user ? (
         <Button onClick={() => auth.signOut()}>Logout</Button>
       ) : (
           <div className="app_loginContainer">
@@ -178,13 +171,21 @@ function App() {
           </div>
 
         )}
+      </div>
+      
+      <div className="app_posts">
+        {
+          posts.map(({ id, post }) => (
+            <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+          ))
+        }
+      </div>
 
-      <h1>Instagram Clone</h1>
-      {
-        posts.map(({ id, post }) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
-        ))
-      }
+      {user?.displayName ?(
+        <ImageUpload username={user.displayName}/>
+      ):(
+        <h3>Sorry! You Need to Login to Upload.</h3>
+      )}
 
     </div>
   );
